@@ -1,13 +1,12 @@
-// ignore_for_file: camel_case_types, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, unused_element, use_build_context_synchronously
+// ignore_for_file: camel_case_types, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, unused_element, use_build_context_synchronously, must_be_immutable, non_constant_identifier_names
 
+//cette page de modification profile etudiant
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:location/model/etudiant.dart';
-import 'package:location/pages/profile.dart';
-import 'package:location/services/services_etudient.dart';
+import 'package:location/services/services_etudiant.dart';
+
 
 ServEtudiant _authServiceEtudiant = ServEtudiant();
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -48,9 +47,9 @@ class _editeProfileScreenState extends State<editeProfileScreen> {
                             const SizedBox(
                               height: 140,
                             ),
-                         const   CircleAvatar(
+                            const CircleAvatar(
                               backgroundColor:
-                                   Color.fromARGB(255, 231, 231, 231),
+                                  Color.fromARGB(255, 231, 231, 231),
                               radius: 50,
                               child: Icon(
                                 Icons.person,
@@ -69,7 +68,8 @@ class _editeProfileScreenState extends State<editeProfileScreen> {
                                 builder: (context, AsyncSnapshot snapshot) {
                                   if (snapshot.hasData) {
                                     ModifnomC.text = snapshot.data!['nom'];
-                                    ModifadresseC.text = snapshot.data!['adresse'];
+                                    ModifadresseC.text =
+                                        snapshot.data!['adresse'];
                                     ModifphoneC.text = snapshot.data!['phone'];
                                   }
                                   return Form(
@@ -178,7 +178,7 @@ class _editeProfileScreenState extends State<editeProfileScreen> {
                                                 if (value!.isEmpty) {
                                                   return 'adresse cannot be empty ';
                                                 }
-                                                if (!RegExp(r'^[a-z A-Z 0-9]+$')
+                                                if (!RegExp(r"^[a-zA-ZÀ-ÿ0-9\s,'’]+$")
                                                     .hasMatch(value)) {
                                                   return 'Please enter valid adresse';
                                                 }
@@ -339,7 +339,7 @@ class _editeProfileScreenState extends State<editeProfileScreen> {
                                         ),
                                         Row(
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 26,
                                             ),
                                             Padding(
@@ -393,13 +393,21 @@ class _editeProfileScreenState extends State<editeProfileScreen> {
                                                               FontWeight.w600),
                                                     ),
                                                     onPressed: () async {
-                                            if (editeprofilekey.currentState!.validate()) {
-                                              snapshot.data!.reference.update({
-                                                "nom":ModifnomC.text,
-                                                "adresse":ModifadresseC.text,
-                                                "phone":ModifphoneC.text
-                                              }).whenComplete(()=>Navigator.pop(context));
-                                            }
+                                                      if (editeprofilekey
+                                                          .currentState!
+                                                          .validate()) {
+                                                        snapshot.data!.reference
+                                                            .update({
+                                                          "nom": ModifnomC.text,
+                                                          "adresse":
+                                                              ModifadresseC
+                                                                  .text,
+                                                          "phone":
+                                                              ModifphoneC.text
+                                                        }).whenComplete(() =>
+                                                                Navigator.pop(
+                                                                    context));
+                                                      }
                                                     }),
                                               ),
                                             ),

@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 Etudiant etudiantFromJson(String str) => Etudiant.fromJson(json.decode(str));
 
 String etudiantToJson(Etudiant data) => json.encode(data.toJson());
 
-class Etudiant{
+class Etudiant {
   Etudiant({
     this.nom,
     this.email,
@@ -29,7 +28,7 @@ class Etudiant{
         adresse: json["adresse"],
         uid: json["uid"],
       );
- 
+
   Map<String, dynamic> toJson() => {
         "nom": nom,
         "email": email,
@@ -37,13 +36,13 @@ class Etudiant{
         "adresse": adresse,
         "uid": uid,
       };
-   factory Etudiant.fromDoc(DocumentSnapshot doc) {
-     return Etudiant(
-       nom: doc['nom'],
-       email: doc['email'],
-       phone: doc['phone'],
-       adresse: doc['adresse'],
-       uid: doc.id,
-       );
-   }   
+  factory Etudiant.fromDoc(DocumentSnapshot doc) {
+    return Etudiant(
+      nom: doc['nom'],
+      email: doc['email'],
+      phone: doc['phone'],
+      adresse: doc['adresse'],
+      uid: doc.id,
+    );
+  }
 }

@@ -1,13 +1,12 @@
-// ignore_for_file: camel_case_types, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, unused_element, use_build_context_synchronously
+// ignore_for_file: camel_case_types, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, unused_element, use_build_context_synchronously, must_be_immutable, non_constant_identifier_names
 
+//cette page de modification profile etudiant
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:location/model/etudiant.dart';
-import 'package:location/pages/profile.dart';
-import 'package:location/services/services_etudient.dart';
+import 'package:location/services/services_etudiant.dart';
+
 
 ServEtudiant _authServiceEtudiant = ServEtudiant();
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -176,11 +175,11 @@ class _editeProfileProprietaireScreenState extends State<editeProfileProprietair
                                               controller: ModifadresseC,
                                               validator: (value) {
                                                 if (value!.isEmpty) {
-                                                  return 'adresse cannot be empty ';
+                                                  return 'l\'adresse ne peut pas être vide ';
                                                 }
                                                 if (!RegExp(r'^[a-z A-Z 0-9]+$')
                                                     .hasMatch(value)) {
-                                                  return 'Please enter valid adresse';
+                                                  return 'Veuillez saisir une adresse valide';
                                                 }
                                                 return null;
                                               },
@@ -339,7 +338,7 @@ class _editeProfileProprietaireScreenState extends State<editeProfileProprietair
                                         ),
                                         Row(
                                           children: [
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 26,
                                             ),
                                             Padding(
@@ -348,7 +347,7 @@ class _editeProfileProprietaireScreenState extends State<editeProfileProprietair
                                                       horizontal: 6),
                                               child: Container(
                                                 height: 54,
-                                                width: 164,
+                                                width: 144,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(13),
@@ -376,7 +375,7 @@ class _editeProfileProprietaireScreenState extends State<editeProfileProprietair
                                                       horizontal: 16),
                                               child: Container(
                                                 height: 54,
-                                                width: 164,
+                                                width: 144,
                                                 decoration: BoxDecoration(
                                                   borderRadius:
                                                       BorderRadius.circular(13),

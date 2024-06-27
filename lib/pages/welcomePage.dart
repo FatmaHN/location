@@ -6,14 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:location/pages/login.dart';
 import 'package:location/pages/loginProprietaire.dart';
 
-class welcom extends StatefulWidget {
-  const welcom({super.key});
+class welcome extends StatefulWidget {
+  const welcome({super.key});
 
   @override
-  State<welcom> createState() => _welcomState();
+  State<welcome> createState() => _welcomeState();
 }
 
-class _welcomState extends State<welcom> {
+class _welcomeState extends State<welcome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,10 +35,10 @@ class _welcomState extends State<welcom> {
                   height: 20,
                 ),
                 Text(
-                  "        LOCATION\n  POUR  ETUDIANT",
+                  "KARITY",
                   style: GoogleFonts.breeSerif(
                     color: const Color(0xFF3C2DA5),
-                    fontSize: 22,
+                    fontSize: 35,
                   ),
                 ),
               ],
@@ -60,7 +60,7 @@ class _welcomState extends State<welcom> {
                     height: 50,
                   ),
                   const Text(
-                    "Bienvenue                                         ",
+                    "Bienvenue !                                        ",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -72,7 +72,7 @@ class _welcomState extends State<welcom> {
                   const Padding(
                     padding: EdgeInsets.only(left: 30),
                     child: Text(
-                      "Bienvenue dans notre application de location d'appartements ! Explorez, comparez et trouvez votre logement idéal en quelques clics.",
+                      "Bienvenue dans notre application de location de logements pour les étudiants ! Explorez, comparez et trouvez votre logement idéal en quelques clics.",
                       style: TextStyle(color: Colors.white, fontSize: 17),
                     ),
                   ),
@@ -99,7 +99,7 @@ class _welcomState extends State<welcom> {
                                 fontWeight: FontWeight.w600),
                           ),
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const loginScreen()));
@@ -127,7 +127,7 @@ class _welcomState extends State<welcom> {
                                 fontWeight: FontWeight.w600),
                           ),
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>

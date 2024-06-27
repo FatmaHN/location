@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:location/model/etudiant.dart';
+import 'package:location/model/favoritePublication.dart';
+
 
 class ServEtudiant {
   
@@ -12,7 +13,12 @@ class ServEtudiant {
   Etudiant _userFirebaseEtudiant(User? firebaseUser) {
     return Etudiant(uid: firebaseUser!.uid);
   }
-
+FavoritePublication _userFirebaseFavoritePublication(User? firebaseUser) {
+    return FavoritePublication(uid: firebaseUser!.uid);
+  }
+  Stream<FavoritePublication>? get favoritePublication {
+    return _firebaseAuth.authStateChanges().map(_userFirebaseFavoritePublication);
+  }
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
   Future registerUser(String email, String password) async {
@@ -47,6 +53,15 @@ class ServEtudiant {
           .collection('Etudiant')
           .doc(uid)
           .set(muser.toJson());
+    } catch (e) {
+      print(e);
+    }
+  }
+   Future createFavoritePublicationDocument(String uid, FavoritePublication muser) async {
+    try {
+      await _firebaseFirestore
+          .collection('FavoritePublication')
+          .add(muser.toJson());
     } catch (e) {
       print(e);
     }

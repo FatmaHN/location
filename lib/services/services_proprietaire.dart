@@ -1,4 +1,8 @@
 
+// ignore_for_file: unused_field
+
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -67,12 +71,24 @@ class ServProprietaire {
     print(e);
   }
   }
-  Future<String> uploadFile(file) async {
-    Reference reference =_storage.ref().child('publication/${DateTime.now()}.png');
-    UploadTask uploadTask = reference.putFile(file);
-    TaskSnapshot taskSnapshot = await uploadTask;
-    return await taskSnapshot.ref.getDownloadURL();
-  }
+ Future<String> uploadImage(File file) async {
+  FirebaseStorage _storage = FirebaseStorage.instance;
+
+  // Create a reference to the location you want to upload the file to
+  Reference reference = _storage.ref().child('publication/${DateTime.now().millisecondsSinceEpoch}.png');
+
+  // Set the metadata for the image
+  SettableMetadata metadata = SettableMetadata(
+    contentType: 'image/png',
+  );
+
+  // Upload the file with the metadata
+  UploadTask uploadTask = reference.putFile(file, metadata);
+
+  // Wait for the upload to complete and get the download URL
+  TaskSnapshot taskSnapshot = await uploadTask;
+  return await taskSnapshot.ref.getDownloadURL();
+}
 
 
   

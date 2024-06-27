@@ -1,10 +1,11 @@
+//cette page contient le navbar de l'esapce etudiant
+
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:location/pages/listPublication.dart';
-import 'package:location/pages/navigationEtudient/homeEtudient.dart';
+import 'package:location/pages/navigationEtudiant/chat.dart';
+import 'package:location/pages/navigationEtudiant/homeEtudient.dart';
 import 'package:location/pages/profile.dart';
-
-
 
 GlobalKey navi = GlobalKey();
 
@@ -18,9 +19,10 @@ class navigationEtudient extends StatefulWidget {
 class _navigationEtudientState extends State<navigationEtudient> {
   int indexSe = 0;
   final List<Widget> screen = [
-   ListPublication(),
-   profile()
-    ];
+    homeEtudiant(),
+    chatHomeScreenEtudiant(),
+    profile()
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,20 +47,25 @@ class _navigationEtudientState extends State<navigationEtudient> {
                       Color.fromARGB(255, 25, 32, 94).withOpacity(0.5),
                   activeColor: Colors.white,
                   iconSize: 21,
-                  tabBackgroundGradient: LinearGradient(colors: [
+                  tabBackgroundGradient: const LinearGradient(colors: [
                     Color.fromARGB(181, 126, 195, 241),
                     Color(0xFF4B2FFD),
                   ]),
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   duration: Duration(milliseconds: 400),
                   color: Color(0xFF5DCDD7),
                   tabs: [
                     GButton(
                       icon: Icons.home,
-                      text: ' Home',
+                      text: ' Accueil',
                       backgroundColor: Color(0xFF5DCDD7),
                     ),
-                   
+                    GButton(
+                      icon: Icons.message,
+                      text: ' Message',
+                      backgroundColor: Color(0xFF5DCDD7),
+                    ),
                     GButton(
                       icon: Icons.person,
                       text: ' Profil',

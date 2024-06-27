@@ -4,8 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:location/pages/chat/chatScreenpro.dart';
 import 'package:location/pages/editeProfileProprietaire.dart';
-import 'package:location/services/services_etudient.dart';
+import 'package:location/pages/mypublication.dart';
+import 'package:location/pages/navigationPro.dart/chatPro.dart';
+import 'package:location/pages/navigationPro.dart/homePro.dart';
+import 'package:location/services/services_etudiant.dart';
 
 ServEtudiant _authServiceEtudiant = ServEtudiant();
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -29,7 +33,14 @@ class _profilePropritaireState extends State<profilePropritaire> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        
+        /* actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {},
+          )
+        ], */
+        title: const Text('Profil'),
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -37,7 +48,6 @@ class _profilePropritaireState extends State<profilePropritaire> {
               .doc(widget.user.uid)
               .snapshots(),
           builder: (context, snapshot) {
-            
             if (snapshot.hasData) {
               return SafeArea(
                 child: SingleChildScrollView(
@@ -118,7 +128,88 @@ class _profilePropritaireState extends State<profilePropritaire> {
                               ),
                             ),
                           ),
-
+                        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+      MaterialButton(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        onPressed: () {},
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            IconButton(icon:const Icon(Icons.message, color: Colors.grey, size:30),
+            onPressed: () {
+              Navigator.push(
+                                  context,
+                         MaterialPageRoute(
+              builder: (context) => chatHomeScreen(),));
+            },
+            ),
+            const SizedBox(height: 2),
+            const Text(
+              "Message",
+              style: TextStyle(fontWeight: FontWeight.bold,color:Colors.grey ),
+            ),
+          ],
+        ),
+      ),
+      Container(
+        height: 24,
+        child: const VerticalDivider(),
+      ),
+      MaterialButton(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        onPressed: () {},
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            IconButton(icon: const Icon(Icons.photo, color: Colors.grey,size:30),
+            onPressed:() {
+      //          Navigator.push(context,  MaterialPageRoute<void>(
+      // builder: (BuildContext context) =>  card1(uidd: widget.uid,)));
+            } ,
+            
+            ),
+            const SizedBox(height: 2),
+            const Text(
+              "Post",
+              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+      Container(
+        height: 24,
+        child: const VerticalDivider(),
+      ),
+      MaterialButton(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        onPressed: () {},
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            IconButton(icon: const Icon(Icons.star, color: Colors.grey,size:30),
+            onPressed:() {
+              // showDialog(context: context, builder: (context) => Note());
+            } ,
+            
+            ),
+            const SizedBox(height: 2),
+            const Text(
+              "Note",
+              style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+          ]
+        ),
                           // Preferences Section
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -190,42 +281,22 @@ class _profilePropritaireState extends State<profilePropritaire> {
                                     child: ListTile(
                                       leading: const CircleAvatar(
                                         backgroundColor: Colors.green,
-                                        child: Icon(Icons.location_on,
+                                        child: Icon(Icons.card_travel,
                                             color: Colors.white),
                                       ),
-                                      title: const Text('Location'),
+                                      title: const Text('My Publication'),
                                       trailing: const Icon(Icons.chevron_right),
                                       onTap: () {
-                                        // handle onTap
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    Mypublication(user)));
                                       },
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(11),
-                                        color: const Color.fromARGB(
-                                            255, 231, 231, 231)),
-                                    child: ListTile(
-                                      leading: const CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Icon(Icons.email,
-                                            color: Colors.white),
-                                      ),
-                                      title: const Text('Email Notifications'),
-                                      trailing: Switch(
-                                        value: emailNotifications,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            emailNotifications = value;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
@@ -239,15 +310,8 @@ class _profilePropritaireState extends State<profilePropritaire> {
                                         child: Icon(Icons.notifications,
                                             color: Colors.white),
                                       ),
-                                      title: const Text('Push Notifications'),
-                                      trailing: Switch(
-                                        value: pushNotifications,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            pushNotifications = value;
-                                          });
-                                        },
-                                      ),
+                                      title: const Text(' Notifications'),
+                                      trailing: Icon(Icons.chevron_right),
                                     ),
                                   ),
                                 ),
@@ -256,63 +320,7 @@ class _profilePropritaireState extends State<profilePropritaire> {
                           ),
 
                           // Resources Section
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Resources',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(11),
-                                        color: const Color.fromARGB(
-                                            255, 231, 231, 231)),
-                                    child: ListTile(
-                                      leading: const CircleAvatar(
-                                        backgroundColor: Colors.blue,
-                                        child: Icon(Icons.mail,
-                                            color: Colors.white),
-                                      ),
-                                      title: const Text('Contact Us'),
-                                      trailing: const Icon(Icons.chevron_right),
-                                      onTap: () {
-                                        // handle onTap
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(11),
-                                        color: const Color.fromARGB(
-                                            255, 231, 231, 231)),
-                                    child: ListTile(
-                                      leading: const CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Icon(Icons.star,
-                                            color: Colors.white),
-                                      ),
-                                      title: const Text('Rate in App Store'),
-                                      trailing: const Icon(Icons.chevron_right),
-                                      onTap: () {
-                                        // handle onTap
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                         
                         ],
                       ),
                     ),

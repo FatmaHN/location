@@ -5,8 +5,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:location/pages/EditeProfile.dart';
-import 'package:location/pages/editeProfileProprietaire.dart';
-import 'package:location/services/services_etudient.dart';
+import 'package:location/pages/listPublication.dart';
+import 'package:location/pages/navigationEtudiant/chat.dart';
+import 'package:location/pages/navigationEtudiant/homeEtudient.dart';
+import 'package:location/services/services_etudiant.dart';
 
 ServEtudiant _authServiceEtudiant = ServEtudiant();
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -15,7 +17,7 @@ User etudiant = _firebaseAuth.currentUser!;
 
 class profile extends StatefulWidget {
   profile();
-  User  etudiant = _firebaseAuth.currentUser!;
+  User etudiant = _firebaseAuth.currentUser!;
   @override
   State<profile> createState() => _profileState();
 }
@@ -30,7 +32,11 @@ class _profileState extends State<profile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: (){},
+        ), 
+        title: const Text('Profil'),
       ),
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -38,7 +44,6 @@ class _profileState extends State<profile> {
               .doc(widget.etudiant.uid)
               .snapshots(),
           builder: (context, snapshot) {
-            
             if (snapshot.hasData) {
               return SafeArea(
                 child: SingleChildScrollView(
@@ -119,18 +124,55 @@ class _profileState extends State<profile> {
                               ),
                             ),
                           ),
-
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                MaterialButton(
+                                  padding: EdgeInsets.symmetric(vertical: 4),
+                                  onPressed: () {},
+                                  materialTapTargetSize:
+                                      MaterialTapTargetSize.shrinkWrap,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      IconButton(
+                                        icon: Icon(Icons.message,
+                                            color: Colors.grey, size: 30),
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    chatHomeScreenEtudiant(),
+                                              ));
+                                        },
+                                      ),
+                                      SizedBox(height: 2),
+                                      Text(
+                                        "Message",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.grey),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ]),
                           // Preferences Section
                           Padding(
                             padding: const EdgeInsets.symmetric(vertical: 16.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'Preferences',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: const Text(
+                                    'Preferences',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                                 // Padding(
@@ -181,6 +223,7 @@ class _profileState extends State<profile> {
                                     ),
                                   ),
                                 ),
+
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
@@ -190,65 +233,12 @@ class _profileState extends State<profile> {
                                             255, 231, 231, 231)),
                                     child: ListTile(
                                       leading: const CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Icon(Icons.location_on,
+                                        backgroundColor: Colors.red,
+                                        child: Icon(Icons.favorite,
                                             color: Colors.white),
                                       ),
-                                      title: const Text('Location'),
-                                      trailing: const Icon(Icons.chevron_right),
-                                      onTap: () {
-                                        // handle onTap
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(11),
-                                        color: const Color.fromARGB(
-                                            255, 231, 231, 231)),
-                                    child: ListTile(
-                                      leading: const CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Icon(Icons.email,
-                                            color: Colors.white),
-                                      ),
-                                      title: const Text('Email Notifications'),
-                                      trailing: Switch(
-                                        value: emailNotifications,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            emailNotifications = value;
-                                          });
-                                        },
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(11),
-                                        color: const Color.fromARGB(
-                                            255, 231, 231, 231)),
-                                    child: ListTile(
-                                      leading: const CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Icon(Icons.notifications,
-                                            color: Colors.white),
-                                      ),
-                                      title: const Text('Push Notifications'),
-                                      trailing: Switch(
-                                        value: pushNotifications,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            pushNotifications = value;
-                                          });
-                                        },
-                                      ),
+                                      title: const Text('Publication Favorite'),
+                                      trailing: Icon(Icons.chevron_right),
                                     ),
                                   ),
                                 ),
@@ -257,63 +247,9 @@ class _profileState extends State<profile> {
                           ),
 
                           // Resources Section
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  'Resources',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(11),
-                                        color: const Color.fromARGB(
-                                            255, 231, 231, 231)),
-                                    child: ListTile(
-                                      leading: const CircleAvatar(
-                                        backgroundColor: Colors.blue,
-                                        child: Icon(Icons.mail,
-                                            color: Colors.white),
-                                      ),
-                                      title: const Text('Contact Us'),
-                                      trailing: const Icon(Icons.chevron_right),
-                                      onTap: () {
-                                        // handle onTap
-                                      },
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(11),
-                                        color: const Color.fromARGB(
-                                            255, 231, 231, 231)),
-                                    child: ListTile(
-                                      leading: const CircleAvatar(
-                                        backgroundColor: Colors.green,
-                                        child: Icon(Icons.star,
-                                            color: Colors.white),
-                                      ),
-                                      title: const Text('Rate in App Store'),
-                                      trailing: const Icon(Icons.chevron_right),
-                                      onTap: () {
-                                        // handle onTap
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          SizedBox(
+                            height: 100,
+                          )
                         ],
                       ),
                     ),

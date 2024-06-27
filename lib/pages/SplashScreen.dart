@@ -1,9 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:location/pages/OnboardingScreen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:location/pages/OnbordingScreen.dart';
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -14,7 +12,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Timer(
-        Duration(seconds: 8),
+        const Duration(seconds: 8),
         () => Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Onboarding())));
     super.initState();
@@ -40,10 +38,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 20,
               ),
               Text(
-                "        LOCATION\n  POUR  ETUDIANT",
+                "KARITY",
                 style: GoogleFonts.breeSerif(
                   color: Colors.white,
-                  fontSize: 22,
+                  fontSize: 35,
                 ),
               ),
             ],

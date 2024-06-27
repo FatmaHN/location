@@ -1,16 +1,16 @@
-// ignore_for_file: camel_case_types, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, unused_element, use_build_context_synchronously
+// ignore_for_file: camel_case_types, file_names, avoid_unnecessary_containers, sized_box_for_whitespace, unused_element, use_build_context_synchronously, prefer_const_constructors
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:location/model/etudiant.dart';
+import 'package:location/pages/navigationEtudiant/navigationET.dart';
+
+import 'package:location/services/services_etudiant.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:location/model/Proprietaire.dart';
-import 'package:location/pages/navigationPro.dart/navigationPro.dart';
-import 'package:location/services/services_proprietaire.dart';
 
-
-ServProprietaire _authServiceProprietaire = ServProprietaire();
+ServEtudiant _authServiceEtudiant = ServEtudiant();
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
@@ -21,16 +21,14 @@ TextEditingController nomC = TextEditingController();
 TextEditingController adresseC = TextEditingController();
 TextEditingController phoneC = TextEditingController();
 
-class registerProprietaireScreen extends StatefulWidget {
-  const registerProprietaireScreen({super.key});
+class registerScreen extends StatefulWidget {
+  const registerScreen({super.key});
 
   @override
-  State<registerProprietaireScreen> createState() =>
-      _registerProprietaireScreenState();
+  State<registerScreen> createState() => _registerScreenState();
 }
 
-class _registerProprietaireScreenState
-    extends State<registerProprietaireScreen> {
+class _registerScreenState extends State<registerScreen> {
   bool isvisible = true;
   String? selectedValue;
 
@@ -68,7 +66,7 @@ class _registerProprietaireScreenState
                               ),
                             ),
                             const SizedBox(
-                              height: 70,
+                              height: 50,
                             ),
                             Form(
                               key: registerKey,
@@ -101,7 +99,7 @@ class _registerProprietaireScreenState
                                             hintStyle: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 126, 125, 125)),
-                                            hintText: "Nom",
+                                            hintText: "nom",
                                             labelText: "Nom",
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: const BorderSide(
@@ -387,17 +385,6 @@ class _registerProprietaireScreenState
                                           return null;
                                         },
                                         decoration: InputDecoration(
-                                            prefixIcon: const Padding(
-                                              padding: EdgeInsets.only(left: 9),
-                                              child: SizedBox(
-                                                width: 50,
-                                                child: Icon(
-                                                  Icons.lock,
-                                                  size: 26,
-                                                  color: Color(0xFF3C2DA5),
-                                                ),
-                                              ),
-                                            ),
                                             suffixIcon: Padding(
                                               padding: const EdgeInsets.only(
                                                   right: 10),
@@ -425,6 +412,17 @@ class _registerProprietaireScreenState
                                             hintStyle: const TextStyle(
                                                 color: Color.fromARGB(
                                                     255, 126, 125, 125)),
+                                            prefixIcon: const Padding(
+                                              padding: EdgeInsets.only(left: 9),
+                                              child: SizedBox(
+                                                width: 50,
+                                                child: Icon(
+                                                  Icons.lock,
+                                                  size: 26,
+                                                  color: Color(0xFF3C2DA5),
+                                                ),
+                                              ),
+                                            ),
                                             hintText: "mot de passe",
                                             labelText: "Mot de passe",
                                             enabledBorder: OutlineInputBorder(
@@ -480,7 +478,7 @@ class _registerProprietaireScreenState
                                             if (registerKey.currentState!
                                                 .validate()) {
                                               dynamic credentials =
-                                                  await _authServiceProprietaire
+                                                  await _authServiceEtudiant
                                                       .registerUser(
                                                           emailC.text.trim(),
                                                           passwordC.text
@@ -499,20 +497,19 @@ class _registerProprietaireScreenState
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            navigationProprietaire()));
-                                                Proprietaire proprietaire =
-                                                    Proprietaire(
-                                                        nom: nomC.text,
-                                                        email: emailC.text,
-                                                        adresse: adresseC.text,
-                                                        phone: phoneC.text,
-                                                        uid: _firebaseAuth
-                                                            .currentUser!.uid);
-                                                _authServiceProprietaire
-                                                    .createProprietaireDocument(
+                                                            navigationEtudient()));
+                                                Etudiant etudiant = Etudiant(
+                                                    nom: nomC.text,
+                                                    email: emailC.text,
+                                                    adresse: adresseC.text,
+                                                    phone: phoneC.text,
+                                                    uid: _firebaseAuth
+                                                        .currentUser!.uid);
+                                                _authServiceEtudiant
+                                                    .createEtudiantDocument(
                                                         _firebaseAuth
                                                             .currentUser!.uid,
-                                                        proprietaire);
+                                                        etudiant);
                                               }
                                             }
                                           }),
