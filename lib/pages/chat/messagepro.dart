@@ -59,51 +59,53 @@ class _MessageTextFieldState extends State<MessageTextField> {
           ),
           GestureDetector(
             onTap: () async {
-              String message = _controller.text;
-              _controller.clear();
-              await FirebaseFirestore.instance
-                  .collection('Proprietaire')
-                  .doc(widget.currentId)
-                  .collection('messages')
-                  .doc(widget.friendId)
-                  .collection('chats')
-                  .add({
-                "senderId": widget.currentId,
-                "receiverId": widget.friendId,
-                "message": message,
-                "type": "text",
-                "date": DateTime.now(),
-              }).then((value) {
-                FirebaseFirestore.instance
+              if (_controller.text.isNotEmpty) {
+                String message = _controller.text;
+                _controller.clear();
+                await FirebaseFirestore.instance
                     .collection('Proprietaire')
                     .doc(widget.currentId)
                     .collection('messages')
                     .doc(widget.friendId)
-                    .set({
-                  'last_msg': message,
+                    .collection('chats')
+                    .add({
+                  "senderId": widget.currentId,
+                  "receiverId": widget.friendId,
+                  "message": message,
+                  "type": "text",
+                  "date": DateTime.now(),
+                }).then((value) {
+                  FirebaseFirestore.instance
+                      .collection('Proprietaire')
+                      .doc(widget.currentId)
+                      .collection('messages')
+                      .doc(widget.friendId)
+                      .set({
+                    'last_msg': message,
+                  });
                 });
-              });
 
-              await FirebaseFirestore.instance
-                  .collection('Etudiant')
-                  .doc(widget.friendId)
-                  .collection('messages1')
-                  .doc(widget.currentId)
-                  .collection("chats")
-                  .add({
-                "senderId1": widget.currentId,
-                "receiverId1": widget.friendId,
-                "message1": message,
-                "type1": "text",
-                "date1": DateTime.now(),
-              }).then((value) {
-                FirebaseFirestore.instance
+                await FirebaseFirestore.instance
                     .collection('Etudiant')
                     .doc(widget.friendId)
                     .collection('messages1')
                     .doc(widget.currentId)
-                    .set({"last_msg1": message});
-              });
+                    .collection("chats")
+                    .add({
+                  "senderId1": widget.currentId,
+                  "receiverId1": widget.friendId,
+                  "message1": message,
+                  "type1": "text",
+                  "date1": DateTime.now(),
+                }).then((value) {
+                  FirebaseFirestore.instance
+                      .collection('Etudiant')
+                      .doc(widget.friendId)
+                      .collection('messages1')
+                      .doc(widget.currentId)
+                      .set({"last_msg1": message});
+                });
+              }
             },
             child: Container(
               padding: EdgeInsets.all(8),

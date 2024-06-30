@@ -24,7 +24,11 @@ class homeEtudiant extends StatefulWidget {
 
 class _homeEtudiantState extends State<homeEtudiant> {
   User? etudiant = _firebaseAuth.currentUser;
-  List<String> myCategories = ["Maison par place", "Maison complète", "Foyer Privé"];
+  List<String> myCategories = [
+    "Maison par place",
+    "Maison complète",
+    "Foyer Privé"
+  ];
   String selectedCategory = "Maison par place";
   TextEditingController _searchController = TextEditingController();
   String _searchText = "";
@@ -45,7 +49,8 @@ class _homeEtudiantState extends State<homeEtudiant> {
     super.dispose();
   }
 
-  Future<void> _sharePublication(String adresse, String description, String imageUrl) async {
+  Future<void> _sharePublication(
+      String adresse, String description, String imageUrl) async {
     try {
       // Téléchargez l'image
       final response = await http.get(Uri.parse(imageUrl));
@@ -54,7 +59,8 @@ class _homeEtudiantState extends State<homeEtudiant> {
       imgFile.writeAsBytesSync(response.bodyBytes);
 
       // Partagez l'image et le texte en utilisant le package share_plus
-      Share.shareFiles([imgFile.path], text: 'Consultez cet article : $adresse - $description');
+      Share.shareFiles([imgFile.path],
+          text: 'Consultez cet article : $adresse - $description');
     } catch (e) {
       print('Error downloading or sharing the image: $e');
     }
@@ -83,7 +89,10 @@ class _homeEtudiantState extends State<homeEtudiant> {
         ],
       ),
       body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance.collection("Etudiant").doc(etudiant!.uid).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection("Etudiant")
+            .doc(etudiant!.uid)
+            .snapshots(),
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -114,7 +123,9 @@ class _homeEtudiantState extends State<homeEtudiant> {
                             padding: EdgeInsets.symmetric(horizontal: 20),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: category == selectedCategory ? Colors.blue : Colors.black12,
+                              color: category == selectedCategory
+                                  ? Colors.blue
+                                  : Colors.black12,
                             ),
                             child: Center(
                               child: Text(category),
@@ -149,7 +160,8 @@ class _homeEtudiantState extends State<homeEtudiant> {
                         .collection("Publication")
                         .where("typeLocation", isEqualTo: selectedCategory)
                         .where("adresse", isGreaterThanOrEqualTo: _searchText)
-                        .where("adresse", isLessThanOrEqualTo: _searchText + '\uf8ff')
+                        .where("adresse",
+                            isLessThanOrEqualTo: _searchText + '\uf8ff')
                         .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
@@ -160,7 +172,8 @@ class _homeEtudiantState extends State<homeEtudiant> {
                         var docs = snapshot.data!.docs;
                         print("Number of documents fetched: ${docs.length}");
                         if (docs.isEmpty) {
-                          print("No documents found for category: $selectedCategory");
+                          print(
+                              "No documents found for category: $selectedCategory");
                         }
                         return ListView.builder(
                           itemCount: docs.length,
@@ -210,7 +223,8 @@ class _homeEtudiantState extends State<homeEtudiant> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) => profilePropritaire(),
+                                              builder: (context) =>
+                                                  profilePropritaire(),
                                             ),
                                           );
                                         },
@@ -221,7 +235,9 @@ class _homeEtudiantState extends State<homeEtudiant> {
                                             decoration: BoxDecoration(
                                               color: Colors.white,
                                               shape: BoxShape.circle,
-                                              border: Border.all(color: Color.fromARGB(83, 0, 0, 0)),
+                                              border: Border.all(
+                                                  color: Color.fromARGB(
+                                                      83, 0, 0, 0)),
                                             ),
                                             child: Icon(Icons.person),
                                           ),
@@ -236,7 +252,8 @@ class _homeEtudiantState extends State<homeEtudiant> {
                                           subtitle: Text(
                                             doc['adresse'],
                                             style: const TextStyle(
-                                              color: Color.fromARGB(255, 121, 121, 121),
+                                              color: Color.fromARGB(
+                                                  255, 121, 121, 121),
                                               fontSize: 16,
                                               fontWeight: FontWeight.w500,
                                             ),
@@ -247,7 +264,8 @@ class _homeEtudiantState extends State<homeEtudiant> {
                                         padding: const EdgeInsets.all(16.0),
                                         child: Text(
                                           doc['description'],
-                                          style: const TextStyle(fontSize: 18.0),
+                                          style:
+                                              const TextStyle(fontSize: 18.0),
                                         ),
                                       ),
                                       Image.network(
@@ -258,81 +276,141 @@ class _homeEtudiantState extends State<homeEtudiant> {
                                       ),
                                       ExpansionTile(
                                         title: Row(
-                                          children:  [
-                                            const Icon(Icons.favorite, color: Color(0xFF3C2DA5)),
-                                            const SizedBox(width: 10,),
+                                          children: [
+                                            const Icon(Icons.favorite,
+                                                color: Color(0xFF3C2DA5)),
+                                            const SizedBox(
+                                              width: 10,
+                                            ),
                                             InkWell(
-                                              onTap:(){
-                                                _sharePublication(doc['adresse'], doc['description'], doc['imagUrl']);
-                                              },
-                                              child: Image.asset("assets/share.png", height: 20,))
+                                                onTap: () {
+                                                  _sharePublication(
+                                                      doc['adresse'],
+                                                      doc['description'],
+                                                      doc['imagUrl']);
+                                                },
+                                                child: Image.asset(
+                                                  "assets/share.png",
+                                                  height: 20,
+                                                ))
                                           ],
                                         ),
-                                        trailing: const Icon(Icons.comment, color: Color(0xFF3C2DA5)),
+                                        trailing: const Icon(Icons.comment,
+                                            color: Color(0xFF3C2DA5)),
                                         children: [
                                           Column(
                                             children: [
                                               _buildCommentsList(doc.id),
                                               Padding(
-                                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16.0),
                                                 child: Row(
                                                   children: [
                                                     Expanded(
                                                       child: TextFormField(
-                                                        controller: commentaireController,
-                                                        decoration: const InputDecoration(
+                                                        controller:
+                                                            commentaireController,
+                                                        decoration:
+                                                            const InputDecoration(
                                                           focusedBorder: OutlineInputBorder(
-                                                             borderSide:  BorderSide(
-                                                              color: Color.fromARGB(255, 255, 255, 255),
-                                                              width: 2)
-                                                          ),
+                                                              borderSide: BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          255,
+                                                                          255),
+                                                                  width: 2)),
                                                           prefixIcon: Padding(
-                                                            padding:  EdgeInsets.only(top: 8, bottom: 8, right: 8),
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                                    top: 8,
+                                                                    bottom: 8,
+                                                                    right: 8),
                                                             child: CircleAvatar(
-                                                              backgroundColor: Color.fromARGB(255, 231, 231, 231),
+                                                              backgroundColor:
+                                                                  Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          231,
+                                                                          231,
+                                                                          231),
                                                               radius: 19,
                                                               child: Icon(
                                                                 Icons.person,
                                                                 size: 22,
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                               ),
                                                             ),
                                                           ),
-                                                          hintText: "Ajouter commentaire ..",
+                                                          hintText:
+                                                              "Ajouter commentaire ..",
                                                         ),
                                                       ),
                                                     ),
                                                     const SizedBox(width: 10.0),
                                                     IconButton(
-                                                      icon: const Icon(Icons.send,color: Color(0xFF3C2DA5)),
+                                                      icon: const Icon(
+                                                          Icons.send,
+                                                          color: Color(
+                                                              0xFF3C2DA5)),
                                                       onPressed: () async {
-                                                        void _addComment(String publicationId, String commentText) {
-                                                          var user = _firebaseAuth.currentUser;
-                                                          var commentData = {
-                                                            'userID': user!.uid,
-                                                            'nomUser': nameuser,
-                                                            'content': commentText,
-                                                            'timestamp': Timestamp.now(),
-                                                          };
+                                                        if (commentaireController
+                                                            .text.isNotEmpty) {
+                                                          void _addComment(
+                                                              String
+                                                                  publicationId,
+                                                              String
+                                                                  commentText) {
+                                                            var user =
+                                                                _firebaseAuth
+                                                                    .currentUser;
+                                                            var commentData = {
+                                                              'userID':
+                                                                  user!.uid,
+                                                              'nomUser':
+                                                                  nameuser,
+                                                              'content':
+                                                                  commentText,
+                                                              'timestamp':
+                                                                  Timestamp
+                                                                      .now(),
+                                                            };
 
-                                                          _firebaseFirestore
-                                                              .collection('Publication')
-                                                              .doc(publicationId)
-                                                              .collection('comments')
-                                                              .add(commentData)
-                                                              .then((value) {
-                                                            _searchController.clear(); // Clear comment input
-                                                          }).catchError((error) {
-                                                            print("Failed to add comment: $error");
-                                                          });
+                                                            _firebaseFirestore
+                                                                .collection(
+                                                                    'Publication')
+                                                                .doc(
+                                                                    publicationId)
+                                                                .collection(
+                                                                    'comments')
+                                                                .add(
+                                                                    commentData)
+                                                                .then((value) {
+                                                              _searchController
+                                                                  .clear(); // Clear comment input
+                                                            }).catchError(
+                                                                    (error) {
+                                                              print(
+                                                                  "Failed to add comment: $error");
+                                                            });
+                                                          }
+
+                                                          _addComment(
+                                                              doc.id,
+                                                              commentaireController
+                                                                  .text);
                                                         }
-                                                        _addComment(doc.id, commentaireController.text);
                                                       },
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                            const SizedBox(height: 20,)
+                                              const SizedBox(
+                                                height: 20,
+                                              )
                                             ],
                                           ),
                                         ],
@@ -393,11 +471,11 @@ class _homeEtudiantState extends State<homeEtudiant> {
                 title: Text(
                   comment['nomUser'],
                   style: const TextStyle(
-                      color: Color(0xFF3C2DA5),
-                      fontWeight: FontWeight.w500),
+                      color: Color(0xFF3C2DA5), fontWeight: FontWeight.w500),
                 ),
                 subtitle: Text(comment['content'],
-                    style: const TextStyle(color: Color.fromARGB(255, 96, 96, 96))),
+                    style: const TextStyle(
+                        color: Color.fromARGB(255, 96, 96, 96))),
               );
             },
           );

@@ -219,8 +219,11 @@ class _homeProState extends State<homePro> {
                                             height: 240,
                                             fit: BoxFit.cover,
                                           ),
-                                          ExpansionTile(
-                                            title: const Padding(
+                                           Container(
+                                            child: const Text(""),
+                                          )
+                                          /*ExpansionTile(
+                                             title: const Padding(
                                               padding: EdgeInsets.only(),
                                               child: Row(
                                                 children: [
@@ -230,21 +233,21 @@ class _homeProState extends State<homePro> {
                                                   ),
                                                 ],
                                               ),
-                                            ),
-                                            trailing: const Padding(
+                                            ), */
+                                            /*trailing: const  Padding(
                                               padding:
                                                   EdgeInsets.only(right: 220),
                                               child: Icon(
                                                 Icons.comment,
                                                 color: Color(0xFF3C2DA5),
                                               ),
-                                            ),
-                                            children: List.generate(
+                                            ), */
+                                            /* children: List.generate(
                                                 3,
                                                 (index) => ListTile(
                                                     title: Text(
-                                                        'Subtile $index'))),
-                                          ),
+                                                        'Subtile $index'))), 
+                                          ),*/
                                         ],
                                       ),
                                     ),
