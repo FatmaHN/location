@@ -104,7 +104,7 @@ class _detailsPublicationState extends State<detailsPublication> {
                             title: Text(
                               widget.description,
                               style:
-                                  TextStyle(color: Colors.grey, fontSize: 19),
+                                  const TextStyle(color: Colors.grey, fontSize: 19),
                             ),
                           ),
                         ),
@@ -122,7 +122,7 @@ class _detailsPublicationState extends State<detailsPublication> {
                               Text(
                                 widget.nbplace,
                                 style:
-                                    TextStyle(fontSize: 19, color: Colors.grey),
+                                    const TextStyle(fontSize: 19, color: Colors.grey),
                               ),
                             ],
                           ),

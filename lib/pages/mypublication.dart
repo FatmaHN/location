@@ -2,10 +2,12 @@
 
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:location/pages/typePublication.dart';
@@ -64,7 +66,7 @@ class _MypublicationState extends State<Mypublication> {
                   child: InkWell(
                     onTap: () => showpostDialog2(context, user),
                     splashColor: Color(0xFF013C42),
-                    child: Row(children:const [
+                    child: Row(children: const [
                       Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Icon(
@@ -266,6 +268,7 @@ class _MypublicationState extends State<Mypublication> {
                                                                   SizedBox(
                                                                     width: 10,
                                                                   ),
+                                                                  
                                                                   Text(
                                                                     snapshot.data!
                                                                             .docs[index]
@@ -273,7 +276,7 @@ class _MypublicationState extends State<Mypublication> {
                                                                         'adresse'],
                                                                     style: TextStyle(
                                                                         fontSize:
-                                                                            19,
+                                                                            10,
                                                                         color: const Color
                                                                             .fromARGB(
                                                                             255,
@@ -378,413 +381,318 @@ class _MypublicationState extends State<Mypublication> {
                                                     children: [
                                                       IconButton(
                                                         icon: Icon(
-                                                            Icons.edit,
-                                                            color: Colors.green,
-                                                          ),
-                                                          onPressed: () async {
-                                                            var uidPublication =
-                                                                snapshot
-                                                                    .data!
-                                                                    .docs[index]
-                                                                    .id;
-                                                            showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (context) {
-                                                                  return AlertDialog(
-                                                                    content:
-                                                                        Container(
-                                                                      height:
-                                                                          800,
-                                                                      width:
-                                                                          800,
-                                                                      child: StreamBuilder(
-                                                                          stream: FirebaseFirestore.instance.collection('Publication').doc(uidPublication).snapshots(),
-                                                                          builder: (context, AsyncSnapshot snapshot) {
-                                                                            if (snapshot.hasData) {
-                                                                              adresse.text = snapshot.data!['adresse'];
-                                                                              dateDispo.text = snapshot.data!['dateDisponible'];
-                                                                              description.text = snapshot.data!['description'];
-                                                                              nbplace.text = snapshot.data!['nbplace'];
-                                                                              prixC.text = snapshot.data!['prix'];
+                                                          Icons.edit,
+                                                          color: Colors.green,
+                                                        ),
+                                                        onPressed: () async {
+                                                          var uidPublication =
+                                                              snapshot
+                                                                  .data!
+                                                                  .docs[index]
+                                                                  .id;
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return AlertDialog(
+                                                                  content:
+                                                                      Container(
+                                                                    height: 800,
+                                                                    width: 800,
+                                                                    child: StreamBuilder(
+                                                                        stream: FirebaseFirestore.instance.collection('Publication').doc(uidPublication).snapshots(),
+                                                                        builder: (context, AsyncSnapshot snapshot) {
+                                                                          if (snapshot
+                                                                              .hasData) {
+                                                                            adresse.text =
+                                                                                snapshot.data!['adresse'];
+                                                                            dateDispo.text =
+                                                                                snapshot.data!['dateDisponible'];
+                                                                            description.text =
+                                                                                snapshot.data!['description'];
+                                                                            nbplace.text =
+                                                                                snapshot.data!['nbplace'];
+                                                                            prixC.text =
+                                                                                snapshot.data!['prix'];
 
-                                                                              return SingleChildScrollView(
-                                                                                child: Container(
-                                                                                  child: Form(
-                                                                                      key: MaisonPlacemodifKey,
-                                                                                      child: Column(
-                                                                                        children: [
-                                                                                          Stack(
-                                                                                            children: [
-                                                                                              Container(
-                                                                                                height: 160,
-                                                                                                width: 390,
-                                                                                                decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(snapshot.data!['imagUrl']), fit: BoxFit.cover), borderRadius: BorderRadius.circular(13)),
+                                                                            return SingleChildScrollView(
+                                                                              child: Container(
+                                                                                child: Form(
+                                                                                    key: MaisonPlacemodifKey,
+                                                                                    child: Column(
+                                                                                      children: [
+                                                                                        Stack(
+                                                                                          children: [
+                                                                                            Container(
+                                                                                              height: 160,
+                                                                                              width: 390,
+                                                                                              decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(snapshot.data!['imagUrl']), fit: BoxFit.cover), borderRadius: BorderRadius.circular(13)),
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
+                                                                                        const SizedBox(
+                                                                                          height: 30,
+                                                                                        ),
+                                                                                        Padding(
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                                                                                          child: Container(
+                                                                                            height: 64,
+                                                                                            child: TextFormField(
+                                                                                              style: const TextStyle(
+                                                                                                color: Color.fromARGB(255, 116, 116, 116),
+                                                                                                fontWeight: FontWeight.w500,
                                                                                               ),
-                                                                                            ],
-                                                                                          ),
-                                                                                          const SizedBox(
-                                                                                            height: 30,
-                                                                                          ),
-                                                                                          Padding(
-                                                                                            padding: const EdgeInsets.symmetric(horizontal: 0),
-                                                                                            child: Container(
-                                                                                              height: 64,
-                                                                                              child: TextFormField(
-                                                                                                style: const TextStyle(
-                                                                                                  color: Color.fromARGB(255, 116, 116, 116),
-                                                                                                  fontWeight: FontWeight.w500,
-                                                                                                ),
-                                                                                                controller: dateDispo,
-                                                                                                validator: (value) {
-                                                                                                  if (value!.isEmpty) {
-                                                                                                    return 'La date ne peut être vide';
-                                                                                                  }
-                                                                                                  if (!RegExp(r'^[0 -9]+$').hasMatch(value)) {
-                                                                                                    return 'Veuillez saisir une date valide';
-                                                                                                  }
-                                                                                                  return null;
-                                                                                                },
-                                                                                                decoration: InputDecoration(
-                                                                                                    labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
-                                                                                                    hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
-                                                                                                    hintText: "Date disponible",
-                                                                                                    labelText: "Date disponible",
-                                                                                                    enabledBorder: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    ),
-                                                                                                    prefixIcon: Padding(
-                                                                                                      padding: const EdgeInsets.only(left: 9),
-                                                                                                      child: SizedBox(
-                                                                                                          width: 50,
-                                                                                                          child: IconButton(
-                                                                                                              onPressed: () async {
-                                                                                                                final DateTime? _date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2024).add(const Duration(days: 365)));
-                                                                                                                final _formatteddate = DateFormat("dd-MM-yyyy").format(_date!);
-                                                                                                                setState(() {
-                                                                                                                  dateDispo.text = _formatteddate.toString();
-                                                                                                                });
-                                                                                                              },
-                                                                                                              icon: const Icon(Icons.calendar_month, color: Color(0xFF3C2DA5)))),
-                                                                                                    ),
-                                                                                                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
-                                                                                                    errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFFF2600), width: 2)),
-                                                                                                    border: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    )),
-                                                                                              ),
+                                                                                              controller: dateDispo,
+                                                                                              validator: (value) {
+                                                                                                if (value!.isEmpty) {
+                                                                                                  return 'La date ne peut être vide';
+                                                                                                }
+                                                                                                if (!RegExp(r'^[0 -9]+$').hasMatch(value)) {
+                                                                                                  return 'Veuillez saisir une date valide';
+                                                                                                }
+                                                                                                return null;
+                                                                                              },
+                                                                                              decoration: InputDecoration(
+                                                                                                  labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
+                                                                                                  hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
+                                                                                                  hintText: "Date disponible",
+                                                                                                  labelText: "Date disponible",
+                                                                                                  enabledBorder: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  ),
+                                                                                                  prefixIcon: Padding(
+                                                                                                    padding: const EdgeInsets.only(left: 9),
+                                                                                                    child: SizedBox(
+                                                                                                        width: 50,
+                                                                                                        child: IconButton(
+                                                                                                            onPressed: () async {
+                                                                                                              final DateTime? _date = await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000), lastDate: DateTime(2024).add(const Duration(days: 365)));
+                                                                                                              final _formatteddate = DateFormat("dd-MM-yyyy").format(_date!);
+                                                                                                              setState(() {
+                                                                                                                dateDispo.text = _formatteddate.toString();
+                                                                                                              });
+                                                                                                            },
+                                                                                                            icon: const Icon(Icons.calendar_month, color: Color(0xFF3C2DA5)))),
+                                                                                                  ),
+                                                                                                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
+                                                                                                  errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFFF2600), width: 2)),
+                                                                                                  border: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  )),
                                                                                             ),
                                                                                           ),
-                                                                                          const SizedBox(
-                                                                                            height: 20,
-                                                                                          ),
-                                                                                          Padding(
-                                                                                            padding: const EdgeInsets.symmetric(horizontal: 0),
-                                                                                            child: Container(
-                                                                                              height: 64,
-                                                                                              child: TextFormField(
-                                                                                                style: const TextStyle(
-                                                                                                  color: Color.fromARGB(255, 116, 116, 116),
-                                                                                                  fontWeight: FontWeight.w500,
-                                                                                                ),
-                                                                                                controller: adresse,
-                                                                                                validator: (value) {
-                                                                                                  if (value!.isEmpty) {
-                                                                                                    return 'L\'adresse ne peut pas être vide';
-                                                                                                  }
-                                                                                                  if (!RegExp(r'^[a-z A-Z 0-9]+$').hasMatch(value)) {
-                                                                                                    return 'Please enter valid Adresse';
-                                                                                                  }
-                                                                                                  return null;
-                                                                                                },
-                                                                                                decoration: InputDecoration(
-                                                                                                    labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
-                                                                                                    hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
-                                                                                                    hintText: "adresse",
-                                                                                                    labelText: "Adresse",
-                                                                                                    enabledBorder: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    ),
-                                                                                                    prefixIcon: const Padding(
-                                                                                                      padding: EdgeInsets.only(left: 9),
-                                                                                                      child: SizedBox(
-                                                                                                        width: 50,
-                                                                                                        child: Icon(
-                                                                                                          Icons.location_city,
-                                                                                                          size: 26,
-                                                                                                          color: Color(0xFF3C2DA5),
-                                                                                                        ),
+                                                                                        ),
+                                                                                        const SizedBox(
+                                                                                          height: 20,
+                                                                                        ),
+                                                                                        Padding(
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                                                                                          child: Container(
+                                                                                            height: 64,
+                                                                                            child: TextFormField(
+                                                                                              style: const TextStyle(
+                                                                                                color: Color.fromARGB(255, 116, 116, 116),
+                                                                                                fontWeight: FontWeight.w500,
+                                                                                              ),
+                                                                                              controller: adresse,
+                                                                                              validator: (value) {
+                                                                                                if (value!.isEmpty) {
+                                                                                                  return 'L\'adresse ne peut pas être vide';
+                                                                                                }
+                                                                                                if (!RegExp(r'^[a-z A-Z 0-9]+$').hasMatch(value)) {
+                                                                                                  return 'Please enter valid Adresse';
+                                                                                                }
+                                                                                                return null;
+                                                                                              },
+                                                                                              decoration: InputDecoration(
+                                                                                                  labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
+                                                                                                  hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
+                                                                                                  hintText: "adresse",
+                                                                                                  labelText: "Adresse",
+                                                                                                  enabledBorder: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  ),
+                                                                                                  prefixIcon: const Padding(
+                                                                                                    padding: EdgeInsets.only(left: 9),
+                                                                                                    child: SizedBox(
+                                                                                                      width: 50,
+                                                                                                      child: Icon(
+                                                                                                        Icons.location_city,
+                                                                                                        size: 26,
+                                                                                                        color: Color(0xFF3C2DA5),
                                                                                                       ),
                                                                                                     ),
-                                                                                                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
-                                                                                                    errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
-                                                                                                    border: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    )),
-                                                                                              ),
+                                                                                                  ),
+                                                                                                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
+                                                                                                  errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
+                                                                                                  border: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  )),
                                                                                             ),
                                                                                           ),
-                                                                                          const SizedBox(
-                                                                                            height: 20,
-                                                                                          ),
-                                                                                          Padding(
-                                                                                            padding: const EdgeInsets.symmetric(horizontal: 0),
-                                                                                            child: Container(
-                                                                                              height: 64,
-                                                                                              child: TextFormField(
-                                                                                                style: const TextStyle(
-                                                                                                  color: Color.fromARGB(255, 116, 116, 116),
-                                                                                                  fontWeight: FontWeight.w500,
-                                                                                                ),
-                                                                                                controller: nbplace,
-                                                                                                validator: (value) {
-                                                                                                  if (value!.isEmpty) {
-                                                                                                    return 'nombre de place ne peut être vide ';
-                                                                                                  }
-                                                                                                  if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                                                                                    return 'Veuillez saisir un nombre de place valide';
-                                                                                                  }
-                                                                                                  return null;
-                                                                                                },
-                                                                                                decoration: InputDecoration(
-                                                                                                    labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
-                                                                                                    hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
-                                                                                                    hintText: "Nombre de place",
-                                                                                                    labelText: "Nombre de place",
-                                                                                                    enabledBorder: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    ),
-                                                                                                    prefixIcon: const Padding(
-                                                                                                      padding: EdgeInsets.only(left: 9),
-                                                                                                      child: SizedBox(
-                                                                                                        width: 50,
-                                                                                                        child: Icon(
-                                                                                                          Icons.person,
-                                                                                                          size: 26,
-                                                                                                          color: Color(0xFF3C2DA5),
-                                                                                                        ),
+                                                                                        ),
+                                                                                        const SizedBox(
+                                                                                          height: 20,
+                                                                                        ),
+                                                                                        Padding(
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                                                                                          child: Container(
+                                                                                            height: 64,
+                                                                                            child: TextFormField(
+                                                                                              style: const TextStyle(
+                                                                                                color: Color.fromARGB(255, 116, 116, 116),
+                                                                                                fontWeight: FontWeight.w500,
+                                                                                              ),
+                                                                                              controller: nbplace,
+                                                                                              validator: (value) {
+                                                                                                if (value!.isEmpty) {
+                                                                                                  return 'nombre de place ne peut être vide ';
+                                                                                                }
+                                                                                                if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                                                                                                  return 'Veuillez saisir un nombre de place valide';
+                                                                                                }
+                                                                                                return null;
+                                                                                              },
+                                                                                              decoration: InputDecoration(
+                                                                                                  labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
+                                                                                                  hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
+                                                                                                  hintText: "Nombre de place",
+                                                                                                  labelText: "Nombre de place",
+                                                                                                  enabledBorder: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  ),
+                                                                                                  prefixIcon: const Padding(
+                                                                                                    padding: EdgeInsets.only(left: 9),
+                                                                                                    child: SizedBox(
+                                                                                                      width: 50,
+                                                                                                      child: Icon(
+                                                                                                        Icons.person,
+                                                                                                        size: 26,
+                                                                                                        color: Color(0xFF3C2DA5),
                                                                                                       ),
                                                                                                     ),
-                                                                                                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
-                                                                                                    errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
-                                                                                                    border: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    )),
-                                                                                              ),
+                                                                                                  ),
+                                                                                                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
+                                                                                                  errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
+                                                                                                  border: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  )),
                                                                                             ),
                                                                                           ),
-                                                                                          const SizedBox(
-                                                                                            height: 20,
-                                                                                          ),
-                                                                                          Padding(
-                                                                                            padding: const EdgeInsets.symmetric(horizontal: 0),
-                                                                                            child: Container(
-                                                                                              height: 64,
-                                                                                              child: TextFormField(
-                                                                                                style: const TextStyle(
-                                                                                                  color: Color.fromARGB(255, 116, 116, 116),
-                                                                                                  fontWeight: FontWeight.w500,
-                                                                                                ),
-                                                                                                controller: prixC,
-                                                                                                validator: (value) {
-                                                                                                  if (value!.isEmpty) {
-                                                                                                    return 'prix ne peut être vide ';
-                                                                                                  }
-                                                                                                  if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                                                                                    return 'Veuillez saisir un prix valide';
-                                                                                                  }
-                                                                                                  return null;
-                                                                                                },
-                                                                                                decoration: InputDecoration(
-                                                                                                    labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
-                                                                                                    hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
-                                                                                                    hintText: "prix par place",
-                                                                                                    labelText: "prix par place",
-                                                                                                    enabledBorder: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    ),
-                                                                                                    prefixIcon: const Padding(
-                                                                                                      padding: EdgeInsets.only(left: 9),
-                                                                                                      child: SizedBox(
-                                                                                                        width: 50,
-                                                                                                        child: Icon(
-                                                                                                          Icons.price_change,
-                                                                                                          size: 26,
-                                                                                                          color: Color(0xFF3C2DA5),
-                                                                                                        ),
+                                                                                        ),
+                                                                                        const SizedBox(
+                                                                                          height: 20,
+                                                                                        ),
+                                                                                        Padding(
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                                                                                          child: Container(
+                                                                                            height: 64,
+                                                                                            child: TextFormField(
+                                                                                              style: const TextStyle(
+                                                                                                color: Color.fromARGB(255, 116, 116, 116),
+                                                                                                fontWeight: FontWeight.w500,
+                                                                                              ),
+                                                                                              controller: prixC,
+                                                                                              validator: (value) {
+                                                                                                if (value!.isEmpty) {
+                                                                                                  return 'prix ne peut être vide ';
+                                                                                                }
+                                                                                                if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                                                                                                  return 'Veuillez saisir un prix valide';
+                                                                                                }
+                                                                                                return null;
+                                                                                              },
+                                                                                              decoration: InputDecoration(
+                                                                                                  labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
+                                                                                                  hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
+                                                                                                  hintText: "prix ",
+                                                                                                  labelText: "prix ",
+                                                                                                  enabledBorder: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  ),
+                                                                                                  prefixIcon: const Padding(
+                                                                                                    padding: EdgeInsets.only(left: 9),
+                                                                                                    child: SizedBox(
+                                                                                                      width: 50,
+                                                                                                      child: Icon(
+                                                                                                        Icons.price_change,
+                                                                                                        size: 26,
+                                                                                                        color: Color(0xFF3C2DA5),
                                                                                                       ),
                                                                                                     ),
-                                                                                                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
-                                                                                                    errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
-                                                                                                    border: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    )),
-                                                                                              ),
+                                                                                                  ),
+                                                                                                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
+                                                                                                  errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
+                                                                                                  border: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  )),
                                                                                             ),
                                                                                           ),
-                                                                                          const SizedBox(
-                                                                                            height: 20,
-                                                                                          ),
-                                                                                          Padding(
-                                                                                            padding: const EdgeInsets.symmetric(horizontal: 0),
-                                                                                            child: Container(
-                                                                                              height: 104,
-                                                                                              child: TextFormField(
-                                                                                                style: const TextStyle(
-                                                                                                  color: Color.fromARGB(255, 116, 116, 116),
-                                                                                                  fontWeight: FontWeight.w500,
-                                                                                                ),
-                                                                                                controller: description,
-                                                                                                maxLines: 90,
-                                                                                                validator: (value) {
-                                                                                                   if (value!.isEmpty) {
-                                                                                                     return 'description cannot be empty ';
-                                                                                                   }
-                                                                                                  /* if (!RegExp(r'^[a-z A-Z 0-9]+$')
+                                                                                        ),
+                                                                                        const SizedBox(
+                                                                                          height: 20,
+                                                                                        ),
+                                                                                        Padding(
+                                                                                          padding: const EdgeInsets.symmetric(horizontal: 0),
+                                                                                          child: Container(
+                                                                                            height: 104,
+                                                                                            child: TextFormField(
+                                                                                              style: const TextStyle(
+                                                                                                color: Color.fromARGB(255, 116, 116, 116),
+                                                                                                fontWeight: FontWeight.w500,
+                                                                                              ),
+                                                                                              controller: description,
+                                                                                              maxLines: 90,
+                                                                                              validator: (value) {
+                                                                                                if (value!.isEmpty) {
+                                                                                                  return 'description cannot be empty ';
+                                                                                                }
+                                                                                                /* if (!RegExp(r'^[a-z A-Z 0-9]+$')
                                                                                                       .hasMatch(value)) {
                                                                                                     return 'Please enter valid description';
                                                                                                   } */
-                                                                                                 return null;
-                                                                                                 },
-                                                                                                decoration: InputDecoration(
-                                                                                                    labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
-                                                                                                    hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
-                                                                                                    hintText: "description",
-                                                                                                    labelText: "description",
-                                                                                                    enabledBorder: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    ),
-                                                                                                    prefixIcon: const Padding(
-                                                                                                      padding: EdgeInsets.only(left: 9),
-                                                                                                      child: SizedBox(
-                                                                                                        width: 50,
-                                                                                                        child: Icon(
-                                                                                                          Icons.message,
-                                                                                                          size: 26,
-                                                                                                          color: Color(0xFF3C2DA5),
-                                                                                                        ),
+                                                                                                return null;
+                                                                                              },
+                                                                                              decoration: InputDecoration(
+                                                                                                  labelStyle: const TextStyle(color: Color(0xFF3C2DA5)),
+                                                                                                  hintStyle: const TextStyle(color: Color.fromARGB(255, 126, 125, 125)),
+                                                                                                  hintText: "description",
+                                                                                                  labelText: "description",
+                                                                                                  enabledBorder: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  ),
+                                                                                                  prefixIcon: const Padding(
+                                                                                                    padding: EdgeInsets.only(left: 9),
+                                                                                                    child: SizedBox(
+                                                                                                      width: 50,
+                                                                                                      child: Icon(
+                                                                                                        Icons.message,
+                                                                                                        size: 26,
+                                                                                                        color: Color(0xFF3C2DA5),
                                                                                                       ),
                                                                                                     ),
-                                                                                                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
-                                                                                                    errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
-                                                                                                    border: OutlineInputBorder(
-                                                                                                      borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
-                                                                                                      borderRadius: BorderRadius.circular(13),
-                                                                                                    )),
-                                                                                              ),
+                                                                                                  ),
+                                                                                                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(15), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
+                                                                                                  errorBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2)),
+                                                                                                  border: OutlineInputBorder(
+                                                                                                    borderSide: const BorderSide(color: Color(0xFFD7D7D7), width: 2),
+                                                                                                    borderRadius: BorderRadius.circular(13),
+                                                                                                  )),
                                                                                             ),
                                                                                           ),
-                                                                                          const SizedBox(
-                                                                                            height: 10,
-                                                                                          ),
-                                                                                          Row(
-                                                                                            children: [
-                                                                                              SizedBox(
-                                                                                                width: 10,
-                                                                                              ),
-                                                                                              Container(
-                                                                                                height: 50,
-                                                                                                width: 100,
-                                                                                                decoration: BoxDecoration(color: Color(0xFF0C6E30), borderRadius: BorderRadius.circular(13)),
-                                                                                                child: CupertinoButton(
-                                                                                                  child: Text(
-                                                                                                    "Modifier",
-                                                                                                    style: TextStyle(color: Colors.white),
-                                                                                                  ),
-                                                                                                  onPressed: () async {
-                                                                                                    snapshot.data!.reference.update({
-                                                                                                      "adresse": adresse.text,
-                                                                                                      "dateDisponible": dateDispo.text,
-                                                                                                      "description": description.text,
-                                                                                                      "nbplace": nbplace.text,
-                                                                                                      "prix": prixC.text,
-                                                                                                    }).whenComplete(() => Navigator.pop(context));
-                                                                                                  },
-                                                                                                ),
-                                                                                              ),
-                                                                                              SizedBox(
-                                                                                                width: 10,
-                                                                                              ),
-                                                                                              Container(
-                                                                                                height: 50,
-                                                                                                width: 100,
-                                                                                                decoration: BoxDecoration(color: Color.fromARGB(255, 193, 193, 193), borderRadius: BorderRadius.circular(13)),
-                                                                                                child: CupertinoButton(
-                                                                                                  child: Text(
-                                                                                                    "Annuler",
-                                                                                                    style: TextStyle(color: Colors.white),
-                                                                                                  ),
-                                                                                                  onPressed: () async {
-                                                                                                    Navigator.pop(context);
-                                                                                                  },
-                                                                                                ),
-                                                                                              ),
-                                                                                            ],
-                                                                                          )
-                                                                                        ],
-                                                                                      )),
-                                                                                ),
-                                                                              );
-                                                                            } else {
-                                                                              return Container();
-                                                                            }
-                                                                          }),
-                                                                    ),
-                                                                  );
-                                                                });
-                                                          },
-                                                          ),
-                                                      SizedBox(
-                                                        width: 10,
-                                                      ),
-                                                      IconButton(
-                                                        icon: Icon(
-                                                            Icons.delete,
-                                                            color: Colors.red,),
-                                                          onPressed: () async {
-                                                            var uidPublication =
-                                                                snapshot
-                                                                    .data!
-                                                                    .docs[index]
-                                                                    .id;
-                                                            showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder:
-                                                                    (context) {
-                                                                      //popup pour la validation de suppression de publication
-                                                                  return AlertDialog(
-                                                                    content:
-                                                                        Container(
-                                                                      height:
-                                                                          200,
-                                                                      child: StreamBuilder(
-                                                                          stream: FirebaseFirestore.instance.collection('Publication').doc(uidPublication).snapshots(),
-                                                                          builder: (context, AsyncSnapshot snapshot) {
-                                                                            if (snapshot.hasData) {
-                                                                              return Container(
-                                                                                child: Form(
-                                                                                    key: publicationkey,
-                                                                                    child: Column(children: [
-                                                                                      Column(children: [
-                                                                                        SizedBox(
-                                                                                          height: 30,
                                                                                         ),
-                                                                                        Text(
-                                                                                          "Voulez-vous supprimer ce parcelle",
-                                                                                          style: TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.w500),
+                                                                                        const SizedBox(
+                                                                                          height: 10,
                                                                                         ),
-                                                                                        SizedBox(height: 40),
                                                                                         Row(
                                                                                           children: [
                                                                                             SizedBox(
@@ -793,19 +701,25 @@ class _MypublicationState extends State<Mypublication> {
                                                                                             Container(
                                                                                               height: 50,
                                                                                               width: 100,
-                                                                                              decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(13)),
+                                                                                              decoration: BoxDecoration(color: Color(0xFF0C6E30), borderRadius: BorderRadius.circular(13)),
                                                                                               child: CupertinoButton(
                                                                                                 child: Text(
-                                                                                                  "Supprimer",
+                                                                                                  "Modifier",
                                                                                                   style: TextStyle(color: Colors.white),
                                                                                                 ),
-                                                                                                onPressed: () async {
-                                                                                                  snapshot.data!.reference.delete().whenComplete(() => Navigator.push(context, MaterialPageRoute(builder: (context) => Mypublication(user))));
-                                                                                                },
+                                                                                                onPressed: () async {if(MaisonPlacemodifKey.currentState!.validate()){
+                                                                                                  snapshot.data!.reference.update({
+                                                                                                    "adresse": adresse.text,
+                                                                                                    "dateDisponible": dateDispo.text,
+                                                                                                    "description": description.text,
+                                                                                                    "nbplace": nbplace.text,
+                                                                                                    "prix": prixC.text,
+                                                                                                  }).whenComplete(() => Navigator.pop(context));
+                                                                                                }}
                                                                                               ),
                                                                                             ),
                                                                                             SizedBox(
-                                                                                              width: 20,
+                                                                                              width: 10,
                                                                                             ),
                                                                                             Container(
                                                                                               height: 50,
@@ -823,20 +737,111 @@ class _MypublicationState extends State<Mypublication> {
                                                                                             ),
                                                                                           ],
                                                                                         )
-                                                                                      ]),
-                                                                                    ])),
-                                                                              );
-                                                                            } else {
-                                                                              return Container();
-                                                                            }
-                                                                          }),
-                                                                    ),
-                                                                  );
-                                                                });
-                                                          },
-                                                          
-                                                          )
-                                                      
+                                                                                      ],
+                                                                                    )),
+                                                                              ),
+                                                                            );
+                                                                          } else {
+                                                                            return Container();
+                                                                          }
+                                                                        }),
+                                                                  ),
+                                                                );
+                                                              });
+                                                        },
+                                                      ),
+                                                      SizedBox(
+                                                        width: 10,
+                                                      ),
+                                                      IconButton(
+                                                        icon: Icon(
+                                                          Icons.delete,
+                                                          color: Colors.red,
+                                                        ),
+                                                        onPressed: () async {
+                                                          var uidPublication =
+                                                              snapshot
+                                                                  .data!
+                                                                  .docs[index]
+                                                                  .id;
+                                                          showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                //popup pour la validation de suppression de publication
+                                                                return AlertDialog(
+                                                                  content:
+                                                                      Container(
+                                                                        width: 300,
+                                                                    height: 300,
+                                                                    child: StreamBuilder(
+                                                                        stream: FirebaseFirestore.instance.collection('Publication').doc(uidPublication).snapshots(),
+                                                                        builder: (context, AsyncSnapshot snapshot) {
+                                                                          if (snapshot
+                                                                              .hasData) {
+                                                                            return Container(
+                                                                              child: Form(
+                                                                                  key: publicationkey,
+                                                                                  child: Column(children: [
+                                                                                    Column(children: [
+                                                                                      SizedBox(
+                                                                                        height: 30,
+                                                                                      ),
+                                                                                      Text(
+                                                                                        "Voulez-vous supprimer cette publication",
+                                                                                        style: TextStyle(fontSize: 22, color: Colors.black, fontWeight: FontWeight.w500),
+                                                                                      ),
+                                                                                      SizedBox(height: 40),
+                                                                                      Column(
+                                                                                        children: [
+                                                                                          SizedBox(
+                                                                                            width: 10,
+                                                                                          ),
+                                                                                          Container(
+                                                                                            height: 50,
+                                                                                            width: 200,
+                                                                                            decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(13)),
+                                                                                            child: CupertinoButton(
+                                                                                              child: Text(
+                                                                                                "supprimer",
+                                                                                                style: TextStyle(color: Colors.white),
+                                                                                              ),
+                                                                                              onPressed: () async {
+                                                                                                snapshot.data!.reference.delete().whenComplete(() => Navigator.push(context, MaterialPageRoute(builder: (context) => Mypublication(user))));
+                                                                                              },
+                                                                                            ),
+                                                                                          ),
+                                                                                          SizedBox(
+                                                                                            height: 20,
+                                                                                          ),
+                                                                                          Container(
+                                                                                            height: 50,
+                                                                                            width: 200,
+                                                                                            decoration: BoxDecoration(color: Color.fromARGB(255, 193, 193, 193), borderRadius: BorderRadius.circular(13)),
+                                                                                            child: CupertinoButton(
+                                                                                              child: Text(
+                                                                                                "ANNULER",
+                                                                                                style: TextStyle(color: Colors.white),
+                                                                                              ),
+                                                                                              onPressed: () async {
+                                                                                                Navigator.pop(context);
+                                                                                              },
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      )
+                                                                                    ]),
+                                                                                  ])),
+                                                                            );
+                                                                          } else {
+                                                                            return Container();
+                                                                          }
+                                                                        }),
+                                                                  ),
+                                                                );
+                                                              });
+                                                        },
+                                                      )
                                                     ],
                                                   ))
                                             ],

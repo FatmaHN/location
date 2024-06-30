@@ -32,8 +32,8 @@ class Onboarding extends StatelessWidget {
           fontWeight: FontWeight.w500),
       imageUrl: 'assets/img7.png',
     ),
-    Introduction(
-      title: 'Utilisation de Cartes Interactives ',
+    /* Introduction(
+      title: 'Utilisation de Cartes\n Interactives ',
       titleTextStyle: const TextStyle(
           color: Color(0xFF3C2DA5), fontSize: 20, fontWeight: FontWeight.w700),
       subTitle: 'Visualiser les adresses des logements à l\'aide de cartes',
@@ -42,7 +42,7 @@ class Onboarding extends StatelessWidget {
           fontSize: 15,
           fontWeight: FontWeight.w500),
       imageUrl: 'assets/img3.png',
-    ),
+    ), */
     Introduction(
       title: 'Découvrez et recherchez\n des logements ',
       titleTextStyle: const TextStyle(
@@ -55,14 +55,14 @@ class Onboarding extends StatelessWidget {
       imageUrl: 'assets/img2.png',
     ),
     Introduction(
-      title: 'communication direct \navec les propriétaires',
+      title: 'communication direct ',
       titleTextStyle: const TextStyle(
           color: Color(0xFF3C2DA5), fontSize: 25, fontWeight: FontWeight.w700),
       subTitle:
           'Interagissez directement avec les propriétaires des logements qui vous intéressent en envoyant des messages instantanés via\n notre application. ',
       subTitleTextStyle: const TextStyle(
           color: Color.fromARGB(255, 4, 4, 5),
-          fontSize: 15,
+          fontSize: 13,
           fontWeight: FontWeight.w500),
       imageUrl: 'assets/img8.png',
     ),

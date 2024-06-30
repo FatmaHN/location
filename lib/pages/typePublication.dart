@@ -9,9 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:location/pages/FormFoyerPriv%C3%A9.dart';
 import 'package:location/pages/FormMaisonParPlace.dart';
 import 'package:location/services/services_proprietaire.dart';
-
 import 'package:location/pages/FormMaisonComplet.dart';
-
 import 'package:location/utils/global.dart';
 
 ServProprietaire _authServiceProprietaire = ServProprietaire();
@@ -26,6 +24,7 @@ class TypePublication extends StatefulWidget {
 
   @override
   State<TypePublication> createState() => _TypePublicationState();
+  //showpostDialogMaisonParPlace
   void showpostDialog(BuildContext context, ImageSource source) async {
     // ignore: no_leading_underscores_for_local_identifiers
     XFile? _pickedFile = await ImagePicker().pickImage(source: source);
@@ -70,9 +69,9 @@ class _TypePublicationState extends State<TypePublication> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Center(
+            title: const Center(
               child: Text(
-                "Choose option",
+                "Choisir option",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF0C6E30),
@@ -81,24 +80,24 @@ class _TypePublicationState extends State<TypePublication> {
             ),
             content: SingleChildScrollView(
               child: ListBody(children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: InkWell(
                     onTap: () => showpostDialog2(context, user),
-                    splashColor: Color(0xFF013C42),
-                    child: Row(children: [
+                    splashColor: const Color(0xFF013C42),
+                    child: const Row(children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding:  EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.camera,
                           color: Color(0xFF0C6E30),
                         ),
                       ),
                       Text(
-                        'Camera',
+                        'Caméra',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -111,17 +110,17 @@ class _TypePublicationState extends State<TypePublication> {
                   padding: const EdgeInsets.only(left: 50),
                   child: InkWell(
                     onTap: () => showpostDialog1(context, user),
-                    splashColor: Color(0xFF0C6E30),
-                    child: Row(children: [
+                    splashColor: const Color(0xFF0C6E30),
+                    child: const Row(children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.image,
                           color: Color(0xFF0C6E30),
                         ),
                       ),
                       Text(
-                        'Gallery',
+                        'Galerie',
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -130,7 +129,7 @@ class _TypePublicationState extends State<TypePublication> {
                     ]),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ]),
@@ -144,9 +143,9 @@ class _TypePublicationState extends State<TypePublication> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Center(
+            title: const Center(
               child: Text(
-                "Choose option",
+                "Choisir option",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF0C6E30),
@@ -218,9 +217,9 @@ class _TypePublicationState extends State<TypePublication> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Center(
+            title: const Center(
               child: Text(
-                "Choose option",
+                "Choisir option",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF0C6E30),
@@ -229,17 +228,17 @@ class _TypePublicationState extends State<TypePublication> {
             ),
             content: SingleChildScrollView(
               child: ListBody(children: [
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 50),
                   child: InkWell(
                     onTap: () => showpostDialogfoyer2(context, user),
-                    splashColor: Color(0xFF013C42),
-                    child: Row(children: [
+                    splashColor: const Color(0xFF013C42),
+                    child: const Row(children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.camera,
                           color: Color(0xFF0C6E30),
@@ -259,10 +258,10 @@ class _TypePublicationState extends State<TypePublication> {
                   padding: const EdgeInsets.only(left: 50),
                   child: InkWell(
                     onTap: () => showpostDialogfoyer1(context, user),
-                    splashColor: Color(0xFF0C6E30),
-                    child: Row(children: [
+                    splashColor: const Color(0xFF0C6E30),
+                    child: const Row(children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding:  EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.image,
                           color: Color(0xFF0C6E30),
@@ -278,7 +277,7 @@ class _TypePublicationState extends State<TypePublication> {
                     ]),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
               ]),
@@ -392,13 +391,13 @@ class _TypePublicationState extends State<TypePublication> {
                                         topLeft: Radius.circular(19),
                                         bottomLeft: Radius.circular(19))),
                               ),
-                              Column(
-                                children: const [
+                              const Column(
+                                children:  [
                                   SizedBox(
                                     height: 50,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: EdgeInsets.all(10.0),
                                     child: Text(
                                       "Maison complète",
                                       style: TextStyle(
@@ -445,13 +444,13 @@ class _TypePublicationState extends State<TypePublication> {
                                         topLeft: Radius.circular(19),
                                         bottomLeft: Radius.circular(19))),
                               ),
-                              Column(
+                              const Column(
                                 children: [
                                   SizedBox(
                                     height: 50,
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.all(10.0),
+                                    padding: EdgeInsets.all(10.0),
                                     child: Text(
                                       "Foyer Privé",
                                       style: TextStyle(

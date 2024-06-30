@@ -1,4 +1,4 @@
-//cette page contient le code qui me permet d'afficher la liste des annonces trouvées
+/* //cette page contient le code qui me permet d'afficher la liste des annonces trouvées
 
 // ignore_for_file: must_be_immutable, unused_element, use_key_in_widget_constructors, unused_field, prefer_final_fields, sized_box_for_whitespace, file_names
 
@@ -214,3 +214,4 @@ class _ListPublicationState extends State<ListPublication> {
         ));
   }
 }
+ */

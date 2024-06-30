@@ -28,8 +28,6 @@ FavoritePublication _userFirebaseFavoritePublication(User? firebaseUser) {
       User firebaseUser = endUserCredentiels.user!;
       return _userFirebaseEtudiant(firebaseUser);
     } catch (e) {
-
-       
       print("Account creation failed , reason : " + e.toString());
       return null;
     }

@@ -10,7 +10,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:location/pages/navigationPro.dart/profileProprietaire.dart';
 import 'package:path_provider/path_provider.dart';
 
-//défiition de variable global
+//défition de variable global
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 final TextEditingController commentaireController = TextEditingController();
@@ -54,7 +54,7 @@ class _homeEtudiantState extends State<homeEtudiant> {
       imgFile.writeAsBytesSync(response.bodyBytes);
 
       // Partagez l'image et le texte en utilisant le package share_plus
-      Share.shareFiles([imgFile.path], text: 'Check out this publication: $adresse - $description');
+      Share.shareFiles([imgFile.path], text: 'Consultez cet article : $adresse - $description');
     } catch (e) {
       print('Error downloading or sharing the image: $e');
     }

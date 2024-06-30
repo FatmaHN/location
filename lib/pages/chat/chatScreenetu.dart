@@ -31,7 +31,7 @@ class ChatScreenetudiant extends StatelessWidget {
               borderRadius: BorderRadius.circular(80),
               child:Icon(Icons.person, color: Colors.white,)
             ),
-            SizedBox(
+            const SizedBox(
               width: 8,
             ),
             Text(

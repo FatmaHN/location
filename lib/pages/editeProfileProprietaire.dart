@@ -177,7 +177,7 @@ class _editeProfileProprietaireScreenState extends State<editeProfileProprietair
                                                 if (value!.isEmpty) {
                                                   return 'l\'adresse ne peut pas être vide ';
                                                 }
-                                                if (!RegExp(r'^[a-z A-Z 0-9]+$')
+                                                if (!RegExp(r"^[a-zA-ZÀ-ÿ0-9\s,'’]+$")
                                                     .hasMatch(value)) {
                                                   return 'Veuillez saisir une adresse valide';
                                                 }

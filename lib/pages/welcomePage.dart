@@ -48,7 +48,7 @@ class _welcomeState extends State<welcome> {
             top: 470,
             child: Container(
               height: 500,
-              width: 412,
+              width: 390,
               decoration: const BoxDecoration(
                   color: Color(0xFF3C2DA5),
                   borderRadius: BorderRadius.only(

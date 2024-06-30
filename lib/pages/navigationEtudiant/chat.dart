@@ -85,7 +85,7 @@ class _chatHomeScreenEtudiantState extends State<chatHomeScreenEtudiant> {
                             subtitle: Container(
                               child: Text(
                                 "$lastMsg",
-                                style: TextStyle(color: Colors.grey),
+                                style: const TextStyle(color: Colors.grey),
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -101,12 +101,12 @@ class _chatHomeScreenEtudiantState extends State<chatHomeScreenEtudiant> {
                             },
                           );
                         }
-                        return LinearProgressIndicator();
+                        return const LinearProgressIndicator();
                       },
                     );
                   });
             }
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }),

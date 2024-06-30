@@ -187,7 +187,7 @@ class _FormMaisonCompletState extends State<FormMaisonComplet> {
                                     if (value!.isEmpty) {
                                       return 'Adresse cannot be empty ';
                                     }
-                                    if (!RegExp(r'^[a-z A-Z 0-9]+$')
+                                    if (!RegExp(r"^[a-zA-ZÀ-ÿ0-9\s,'’]+$")
                                         .hasMatch(value)) {
                                       return 'Please enter valid Adresse';
                                     }
@@ -326,7 +326,7 @@ class _FormMaisonCompletState extends State<FormMaisonComplet> {
                                           width: 12,
                                         ),
                                         Text(
-                                          'Ville',
+                                          'Genre',
                                           style: TextStyle(
                                             color: Color(0xFF3C2DA5),
                                             fontWeight: FontWeight.w400,
@@ -431,8 +431,8 @@ class _FormMaisonCompletState extends State<FormMaisonComplet> {
                                       hintStyle: const TextStyle(
                                           color: Color.fromARGB(
                                               255, 126, 125, 125)),
-                                      hintText: "prix par place",
-                                      labelText: "prix par place",
+                                      hintText: "prix ",
+                                      labelText: "prix ",
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(
                                             color: Color(0xFFD7D7D7), width: 2),
